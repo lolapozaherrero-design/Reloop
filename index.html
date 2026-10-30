@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reloop — Alquila, usa, devuelve | Un mundo más circular</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'reloop-pink': '#D94E78',
+                        'reloop-pink-light': '#FBE7EE',
+                        'reloop-green': '#456B48',
+                        'reloop-cream': '#FCFAF5',
+                        'reloop-text': '#34443B',
+                    },
+                    fontFamily: {
+                        sans: ['Quicksand', 'Nunito', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Quicksand & Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #FCFAF5;
+            color: #34443B;
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+            overflow-x: hidden;
+        }
+        /* Floating animations for mockup elements */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+        @keyframes floatFast {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(-2deg); }
+        }
+        .animate-float-1 { animation: floatSlow 4s ease-in-out infinite; }
+        .animate-float-2 { animation: floatFast 5s ease-in-out infinite; }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FCFAF5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D94E78;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-reloop-cream text-reloop-text antialiased selection:bg-reloop-pink-light selection:text-reloop-pink">
+
+    <!-- Notification Toast / Modal Box (No alert used) -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 bg-white border-2 border-reloop-pink shadow-xl rounded-2xl p-4 flex items-center space-x-3 max-w-sm">
+        <div class="bg-reloop-pink-light text-reloop-pink p-3 rounded-xl flex-shrink-0">
+            <i class="fa-solid fa-heart text-xl"></i>
+        </div>
+        <div>
+            <h4 class="font-bold text-reloop-text text-sm">¡Genial elección!</h4>
+            <p id="toast-message" class="text-xs text-gray-600">Has seleccionado un producto para alquilar.</p>
+        </div>
+    </div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 bg-reloop-cream/90 backdrop-blur-md border-b border-reloop-pink/10 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo Brand -->
+            <a href="#" class="flex items-center space-x-2 group">
+                <div class="flex flex-col items-center">
+                    <!-- Leaf icons on top -->
+                    <div class="flex space-x-1 mb-[-4px] text-reloop-green text-xs">
+                        <i class="fa-solid fa-leaf transform -rotate-12"></i>
+                        <i class="fa-solid fa-leaf transform rotate-12"></i>
+                    </div>
+                    <span class="text-3xl sm:text-4xl font-extrabold tracking-tight text-reloop-pink group-hover:scale-105 transition-transform">
+                        reloop
+                    </span>
+                    <span class="text-[10px] tracking-widest text-reloop-green font-bold uppercase mt-[-4px]">
+                        alquila · usa · devuelve
+                    </span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8 font-semibold text-sm">
+                <a href="#beneficios" class="hover:text-reloop-pink transition-colors">Beneficios</a>
+                <a href="#categorias" class="hover:text-reloop-pink transition-colors">Categorías</a>
+                <a href="#catalogo" class="hover:text-reloop-pink transition-colors">Explorar</a>
+                <a href="#comofunciona" class="hover:text-reloop-pink transition-colors">Cómo funciona</a>
+            </nav>
+
+            <!-- Action CTA Header -->
+            <div class="flex items-center space-x-3">
+                <a href="#catalogo" class="bg-reloop-pink text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-md hover:bg-reloop-pink/90 hover:shadow-lg transition-all transform hover:-translate-y-0.5">
+                    Alquilar ahora ♡
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-8 pb-16 md:pt-16 md:pb-24 overflow-hidden">
+        <!-- Decorative background organic shapes -->
+        <div class="absolute top-10 left-[-5%] w-72 h-72 bg-reloop-pink-light/50 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-[-5%] w-80 h-80 bg-green-100/60 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+            <!-- Main Title Header Banner -->
+            <div class="text-center max-w-3xl mx-auto mb-10 md:mb-14">
+                <div class="inline-block bg-reloop-pink-light text-reloop-pink px-4 py-1.5 rounded-full font-bold text-xs sm:text-sm tracking-wide mb-4 shadow-sm">
+                    ✨ Únete a la revolución circular
+                </div>
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-reloop-pink tracking-tight leading-tight drop-shadow-sm">
+                    ¿Por qué comprar si puedes alquilar?
+                </h1>
+                <p class="mt-4 text-base sm:text-lg text-gray-700 max-w-xl mx-auto font-medium">
+                    Disfruta de lo que necesitas hoy sin acumular para siempre. Menos cosas en casa, más libertad en tu vida.
+                </p>
+            </div>
+
+            <!-- Central Hero Composition (Girl with floating mockups like the reference ad) -->
+            <div class="relative max-w-5xl mx-auto flex flex-col items-center justify-center min-h-[420px] sm:min-h-[520px] my-6">
+
+                <!-- Central Model Image Container -->
+                <div class="relative z-20 w-64 sm:w-80 md:w-96 h-80 sm:h-96 md:h-[440px] rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-reloop-pink-light">
+                    <!-- High quality warm portrait fallback -->
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" 
+                         alt="Joven sonriente disfrutando con reloop" 
+                         class="w-full h-full object-cover object-center filter saturate-105"
+                         onerror="this.src='https://placehold.co/600x800/FBE7EE/D94E78?text=Reloop+User'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-reloop-pink/30 via-transparent to-transparent"></div>
+                </div>
+
+                <!-- Floating Product Element 1: Headphones (Top Left) -->
+                <div class="absolute top-2 left-2 sm:left-12 md:left-24 z-30 animate-float-1 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-reloop-pink/20 flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-reloop-pink-light rounded-xl flex items-center justify-center text-reloop-pink text-xl">
+                        <i class="fa-solid fa-headphones"></i>
+                    </div>
+                    <div class="hidden sm:block pr-2">
+                        <p class="text-xs font-bold">Auriculares Pro</p>
+                        <p class="text-[10px] text-reloop-pink font-semibold">12€ / semana</p>
+                    </div>
+                </div>
+
+                <!-- Floating Product Element 2: Instant Camera (Middle Left) -->
+                <div class="absolute top-40 left-0 sm:left-4 md:left-8 z-30 animate-float-2 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-reloop-pink/20 flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center text-reloop-pink text-xl">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <div class="hidden sm:block pr-2">
+                        <p class="text-xs font-bold">Cámara Instantánea</p>
+                        <p class="text-[10px] text-reloop-pink font-semibold">8€ / finde</p>
+                    </div>
+                </div>
+
+                <!-- Floating Product Element 3: Mobile App Mockup (Bottom Left) -->
+                <div class="absolute bottom-[-20px] left-2 sm:left-10 z-30 animate-float-1 bg-white rounded-2xl shadow-xl p-2.5 border-2 border-reloop-pink/30 max-w-[140px] sm:max-w-[160px]">
+                    <div class="bg-reloop-pink text-white text-[10px] font-bold px-2 py-0.5 rounded-full inline-block mb-1">App reloop</div>
+                    <p class="text-[11px] font-bold leading-tight">Tu catálogo en el bolsillo</p>
+                    <div class="mt-2 flex justify-around text-reloop-pink text-xs">
+                        <i class="fa-solid fa-camera"></i>
+                        <i class="fa-solid fa-laptop"></i>
+                        <i class="fa-solid fa-shirt"></i>
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+                </div>
+
+                <!-- Floating Product Element 4: Puffer Jacket (Top Right) -->
+                <div class="absolute top-6 right-2 sm:right-12 md:right-24 z-30 animate-float-2 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-reloop-pink/20 flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-reloop-pink-light rounded-xl flex items-center justify-center text-reloop-pink text-xl">
+                        <i class="fa-solid fa-vest"></i>
+                    </div>
+                    <div class="hidden sm:block pr-2">
+                        <p class="text-xs font-bold">Chaqueta Invierno</p>
+                        <p class="text-[10px] text-reloop-pink font-semibold">15€ / mes</p>
+                    </div>
+                </div>
+
+                <!-- Floating Product Element 5: Water Bottle (Middle Right) -->
+                <div class="absolute top-44 right-0 sm:right-4 md:right-8 z-30 animate-float-1 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-reloop-pink/20 flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 text-xl">
+                        <i class="fa-solid fa-bottle-water"></i>
+                    </div>
+                    <div class="hidden sm:block pr-2">
+                        <p class="text-xs font-bold">Botella Térmica</p>
+                        <p class="text-[10px] text-reloop-pink font-semibold">5€ / viaje</p>
+                    </div>
+                </div>
+
+                <!-- Floating Product Element 6: Travel Suitcase (Bottom Right) -->
+                <div class="absolute bottom-[-10px] right-2 sm:right-10 z-30 animate-float-2 bg-white rounded-2xl shadow-xl p-3 border-2 border-reloop-pink/30 flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-reloop-pink-light rounded-xl flex items-center justify-center text-reloop-pink text-lg">
+                        <i class="fa-solid fa-suitcase-rolling"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold">Maleta Cabina</p>
+                        <p class="text-[10px] text-reloop-green font-bold">Disponible</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Hero CTA Button -->
+            <div class="text-center mt-14">
+                <a href="#catalogo" class="inline-flex items-center space-x-3 bg-reloop-pink text-white font-extrabold text-lg sm:text-xl px-8 py-4 rounded-full shadow-lg hover:bg-reloop-pink/90 hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    <span>Descubre reloop</span>
+                    <span class="text-xl">♡</span>
+                </a>
+                <p class="mt-4 text-sm text-reloop-green font-semibold tracking-wide">
+                    🌿 &lt;&lt;Más vida para las cosas&gt;&gt;
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE BENEFICIOS / VALORES (Estilo iconos circulares del anuncio) -->
+    <section id="beneficios" class="py-16 bg-white border-y border-reloop-pink/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-reloop-text">
+                    Ventajas de vivir de forma más circular
+                </h2>
+                <p class="text-gray-600 mt-2 text-sm sm:text-base">
+                    Diseñado para hacerte la vida más fácil sin dejar huella innecesaria.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                <!-- Benefit 1 -->
+                <div class="bg-reloop-cream rounded-3xl p-6 text-center border-2 border-reloop-pink/10 hover:border-reloop-pink/40 transition-all group">
+                    <div class="w-20 h-20 mx-auto bg-reloop-pink-light rounded-full flex items-center justify-center text-reloop-pink text-3xl mb-5 group-hover:scale-110 transition-transform shadow-inner">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-reloop-text mb-2">Consume de forma más responsable</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        Circularidad real. Dale uso a los objetos cuando los necesitas y reduce la sobreproducción mundial.
+                    </p>
+                </div>
+
+                <!-- Benefit 2 -->
+                <div class="bg-reloop-cream rounded-3xl p-6 text-center border-2 border-reloop-pink/10 hover:border-reloop-pink/40 transition-all group">
+                    <div class="w-20 h-20 mx-auto bg-reloop-pink-light rounded-full flex items-center justify-center text-reloop-pink text-3xl mb-5 group-hover:scale-110 transition-transform shadow-inner">
+                        <i class="fa-solid fa-piggy-bank"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-reloop-text mb-2">Paga solo por el tiempo que lo necesitas</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        &lt;&lt;Paga solo por el tiempo que lo necesitas&gt;&gt;. Olvídate de inversiones caras para usos puntuales.
+                    </p>
+                </div>
+
+                <!-- Benefit 3 -->
+                <div class="bg-reloop-cream rounded-3xl p-6 text-center border-2 border-reloop-pink/10 hover:border-reloop-pink/40 transition-all group">
+                    <div class="w-20 h-20 mx-auto bg-reloop-pink-light rounded-full flex items-center justify-center text-reloop-pink text-3xl mb-5 group-hover:scale-110 transition-transform shadow-inner">
+                        <i class="fa-solid fa-house-chimney"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-reloop-text mb-2">Más espacio en tu casa y en tu cabeza</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        &lt;&lt;Más espacio en tu casa y en tu cabeza&gt;&gt;. Sin trastos acumulados ni armarios atestados ocupando sitio.
+                    </p>
+                </div>
+
+                <!-- Benefit 4 -->
+                <div class="bg-reloop-cream rounded-3xl p-6 text-center border-2 border-reloop-pink/10 hover:border-reloop-pink/40 transition-all group">
+                    <div class="w-20 h-20 mx-auto bg-reloop-pink-light rounded-full flex items-center justify-center text-reloop-green text-3xl mb-5 group-hover:scale-110 transition-transform shadow-inner">
+                        <i class="fa-solid fa-earth-americas"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-reloop-text mb-2">Un planeta más feliz</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        Cada alquiler evita la fabricación de nuevos objetos y disminuye la huella de carbono de nuestros hogares.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORÍAS DE ALQUILER -->
+    <section id="categorias" class="py-16 bg-reloop-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-reloop-pink font-bold text-xs uppercase tracking-widest bg-reloop-pink-light px-3 py-1 rounded-full">Explora por mundo</span>
+                    <h2 class="text-3xl font-extrabold text-reloop-text mt-3">Categorías para cada ocasión</h2>
+                </div>
+                <p class="text-gray-600 text-sm mt-2 md:mt-0 max-w-md">
+                    Todo lo que imaginas para tus escapadas, eventos, hogar o tecnología diaria sin comprarlo.
+                </p>
+            </div>
+
+            <!-- Grid de Categorías -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+
+                <!-- Cat 1: Tecnología -->
+                <div onclick="filterCategory('tecnologia')" class="category-card cursor-pointer bg-white p-6 rounded-3xl shadow-sm hover:shadow-md border-2 border-transparent hover:border-reloop-pink transition-all text-center group">
+                    <div class="w-16 h-16 mx-auto bg-reloop-pink-light rounded-2xl flex items-center justify-center text-reloop-pink text-2xl mb-4 group-hover:bg-reloop-pink group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-laptop"></i>
+                    </div>
+                    <h3 class="font-extrabold text-reloop-text text-base">Tecnología</h3>
+                    <p class="text-xs text-gray-500 mt-1">Cámaras, audio, drones</p>
+                </div>
+
+                <!-- Cat 2: Moda -->
+                <div onclick="filterCategory('moda')" class="category-card cursor-pointer bg-white p-6 rounded-3xl shadow-sm hover:shadow-md border-2 border-transparent hover:border-reloop-pink transition-all text-center group">
+                    <div class="w-16 h-16 mx-auto bg-reloop-pink-light rounded-2xl flex items-center justify-center text-reloop-pink text-2xl mb-4 group-hover:bg-reloop-pink group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-shirt"></i>
+                    </div>
+                    <h3 class="font-extrabold text-reloop-text text-base">Moda & Eventos</h3>
+                    <p class="text-xs text-gray-500 mt-1">Abrigos, bolsos, vestidos</p>
+                </div>
+
+                <!-- Cat 3: Viajes -->
+                <div onclick="filterCategory('viajes')" class="category-card cursor-pointer bg-white p-6 rounded-3xl shadow-sm hover:shadow-md border-2 border-transparent hover:border-reloop-pink transition-all text-center group">
+                    <div class="w-16 h-16 mx-auto bg-reloop-pink-light rounded-2xl flex items-center justify-center text-reloop-pink text-2xl mb-4 group-hover:bg-reloop-pink group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-suitcase-rolling"></i>
+                    </div>
+                    <h3 class="font-extrabold text-reloop-text text-base">Viajes</h3>
+                    <p class="text-xs text-gray-500 mt-1">Maletas, mochilas, camping</p>
+                </div>
+
+                <!-- Cat 4: Hogar -->
+                <div onclick="filterCategory('hogar')" class="category-card cursor-pointer bg-white p-6 rounded-3xl shadow-sm hover:shadow-md border-2 border-transparent hover:border-reloop-pink transition-all text-center group">
+                    <div class="w-16 h-16 mx-auto bg-reloop-pink-light rounded-2xl flex items-center justify-center text-reloop-pink text-2xl mb-4 group-hover:bg-reloop-pink group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+                    <h3 class="font-extrabold text-reloop-text text-base">Hogar y más</h3>
+                    <p class="text-xs text-gray-500 mt-1">Herramientas, decoración</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN INTERACTIVA / EXPLORADOR Y SIMULADOR DE PRODUCTOS -->
+    <section id="catalogo" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-reloop-pink font-bold text-xs uppercase tracking-widest bg-reloop-pink-light px-3 py-1 rounded-full">Disponibles hoy</span>
+                <h2 class="text-3xl font-extrabold text-reloop-text mt-3">Explora los favoritos de reloop</h2>
+                <p class="text-gray-600 mt-2 text-sm">
+                    Selecciona lo que necesites, elige cuántos días quieres tenerlo y disfrútalo al instante.
+                </p>
+            </div>
+
+            <!-- Filtros interactivos -->
+            <div class="flex flex-wrap justify-center gap-2 mb-10">
+                <button onclick="filterCategory('todos')" class="filter-btn active bg-reloop-pink text-white px-5 py-2 rounded-full font-bold text-xs shadow-sm transition-all">Todos</button>
+                <button onclick="filterCategory('tecnologia')" class="filter-btn bg-reloop-pink-light text-reloop-pink hover:bg-reloop-pink hover:text-white px-5 py-2 rounded-full font-bold text-xs transition-all">Tecnología</button>
+                <button onclick="filterCategory('moda')" class="filter-btn bg-reloop-pink-light text-reloop-pink hover:bg-reloop-pink hover:text-white px-5 py-2 rounded-full font-bold text-xs transition-all">Moda</button>
+                <button onclick="filterCategory('viajes')" class="filter-btn bg-reloop-pink-light text-reloop-pink hover:bg-reloop-pink hover:text-white px-5 py-2 rounded-full font-bold text-xs transition-all">Viajes</button>
+                <button onclick="filterCategory('hogar')" class="filter-btn bg-reloop-pink-light text-reloop-pink hover:bg-reloop-pink hover:text-white px-5 py-2 rounded-full font-bold text-xs transition-all">Hogar</button>
+            </div>
+
+            <!-- Grid de Productos (Dinámico generado por JS) -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Se llena mediante JavaScript con plantillas de productos -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CÓMO FUNCIONA -->
+    <section id="comofunciona" class="py-16 bg-reloop-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-reloop-green font-bold text-xs uppercase tracking-widest bg-emerald-100 px-3 py-1 rounded-full">Súper fácil</span>
+                <h2 class="text-3xl font-extrabold text-reloop-text mt-3">Alquila · Usa · Devuelve</h2>
+                <p class="text-gray-600 mt-2 text-sm">
+                    Tres simples pasos para disfrutar de lo que quieras sin complicaciones.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Paso 1 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border-2 border-reloop-pink/10 text-center relative">
+                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-reloop-pink text-white rounded-full font-extrabold flex items-center justify-center shadow-md">
+                        1
+                    </div>
+                    <div class="w-16 h-16 mx-auto bg-reloop-pink-light rounded-2xl flex items-center justify-center text-reloop-pink text-2xl mb-6 mt-2">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <h3 class="font-extrabold text-xl text-reloop-text mb-2">Alquila</h3>
+                    <p class="text-sm text-gray-600">
+                        Busca en nuestra app o web el objeto que te hace falta para tu escapada, proyecto o temporada y elige el plazo exacto.
+                    </p>
+                </div>
+
+                <!-- Paso 2 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border-2 border-reloop-pink/10 text-center relative">
+                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-reloop-pink text-white rounded-full font-extrabold flex items-center justify-center shadow-md">
+                        2
+                    </div>
+                    <div class="w-16 h-16 mx-auto bg-reloop-pink-light rounded-2xl flex items-center justify-center text-reloop-pink text-2xl mb-6 mt-2">
+                        <i class="fa-solid fa-face-smile"></i>
+                    </div>
+                    <h3 class="font-extrabold text-xl text-reloop-text mb-2">Usa</h3>
+                    <p class="text-sm text-gray-600">
+                        Recíbelo cómodamente en tu casa. Disfrútalo al 100% sin preocuparte por mantenimientos ni almacenamiento posterior.
+                    </p>
+                </div>
+
+                <!-- Paso 3 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border-2 border-reloop-pink/10 text-center relative">
+                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-reloop-pink text-white rounded-full font-extrabold flex items-center justify-center shadow-md">
+                        3
+                    </div>
+                    <div class="w-16 h-16 mx-auto bg-reloop-pink-light rounded-2xl flex items-center justify-center text-reloop-pink text-2xl mb-6 mt-2">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <h3 class="font-extrabold text-xl text-reloop-text mb-2">Devuelve</h3>
+                    <p class="text-sm text-gray-600">
+                        Cuando termines, lo devuelves fácilmente con nuestra etiqueta prepagada. Nosotros nos encargamos de darle nueva vida.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-reloop-text text-white pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+
+                <!-- Col 1: Brand -->
+                <div class="md:col-span-1">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <span class="text-3xl font-extrabold tracking-tight text-reloop-pink">
+                            reloop
+                        </span>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        Alquila, usa y devuelve. Una manera más inteligente y responsable de consumir sin acumular.
+                    </p>
+                    <div class="mt-4 flex space-x-3 text-reloop-pink">
+                        <a href="#" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-reloop-pink hover:text-white transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-reloop-pink hover:text-white transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-reloop-pink hover:text-white transition-colors"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Categorías -->
+                <div>
+                    <h4 class="font-bold text-sm mb-4 text-reloop-pink-light uppercase tracking-wider">Categorías</h4>
+                    <ul class="space-y-2 text-xs text-gray-300">
+                        <li><a href="#catalogo" class="hover:text-reloop-pink transition-colors">Tecnología & Audio</a></li>
+                        <li><a href="#catalogo" class="hover:text-reloop-pink transition-colors">Moda & Eventos</a></li>
+                        <li><a href="#catalogo" class="hover:text-reloop-pink transition-colors">Viajes & Equipaje</a></li>
+                        <li><a href="#catalogo" class="hover:text-reloop-pink transition-colors">Hogar & Tiempo libre</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Empresa -->
+                <div>
+                    <h4 class="font-bold text-sm mb-4 text-reloop-pink-light uppercase tracking-wider">reloop</h4>
+                    <ul class="space-y-2 text-xs text-gray-300">
+                        <li><a href="#beneficios" class="hover:text-reloop-pink transition-colors">Propósito y Valores</a></li>
+                        <li><a href="#comofunciona" class="hover:text-reloop-pink transition-colors">Cómo funciona</a></li>
+                        <li><a href="#" class="hover:text-reloop-pink transition-colors">Sostenibilidad</a></li>
+                        <li><a href="#" class="hover:text-reloop-pink transition-colors">Trabaja con nosotros</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Newsletter -->
+                <div>
+                    <h4 class="font-bold text-sm mb-4 text-reloop-pink-light uppercase tracking-wider">Únete al cambio</h4>
+                    <p class="text-xs text-gray-300 mb-3">Recibe novedades y tips circulares sin spam.</p>
+                    <form onsubmit="subscribeNewsletter(event)" class="flex flex-col space-y-2">
+                        <input type="email" placeholder="tu@correo.com" required class="bg-white/10 border border-white/20 px-4 py-2.5 rounded-xl text-xs text-white placeholder-gray-400 focus:outline-none focus:border-reloop-pink">
+                        <button type="submit" class="bg-reloop-pink text-white font-bold py-2.5 rounded-xl text-xs hover:bg-reloop-pink/90 transition-colors">
+                            Suscribirme ♡
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright & Claim -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400">
+                <p>&copy; 2026 reloop. Todos los derechos reservados.</p>
+                <p class="mt-4 sm:mt-0 font-bold text-reloop-pink-light">
+                    🌱 Un mundo más circular también es más tuyo
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC & PRODUCTS DATABASE -->
+    <script>
+        // Data base of rental products following brand aesthetics
+        const products = [
+            {
+                id: 1,
+                name: "Auriculares Inalámbricos Pro",
+                category: "tecnologia",
+                price: 12,
+                period: "semana",
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80",
+                badge: "Más popular"
+            },
+            {
+                id: 2,
+                name: "Cámara Instantánea Vintage",
+                category: "tecnologia",
+                price: 8,
+                period: "fin de semana",
+                image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80",
+                badge: "Ideal eventos"
+            },
+            {
+                id: 3,
+                name: "Chaqueta Puffer Acolchada",
+                category: "moda",
+                price: 15,
+                period: "mes",
+                image: "https://images.unsplash.com/photo-1543076447-215ad9ba6923?auto=format&fit=crop&w=600&q=80",
+                badge: "Tendencia"
+            },
+            {
+                id: 4,
+                name: "Maleta de Cabina Rígida",
+                category: "viajes",
+                price: 10,
+                period: "viaje (7 días)",
+                image: "https://images.unsplash.com/photo-1581553680321-4fffae59fccd?auto=format&fit=crop&w=600&q=80",
+                badge: "Esencial"
+            },
+            {
+                id: 5,
+                name: "Botella Térmica Eco 750ml",
+                category: "viajes",
+                price: 5,
+                period: "semana",
+                image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=600&q=80",
+                badge: "Eco"
+            },
+            {
+                id: 6,
+                name: "Proyector Portátil Full HD",
+                category: "hogar",
+                price: 18,
+                period: "fin de semana",
+                image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80",
+                badge: "Cine en casa"
+            }
+        ];
+
+        // Render products in grid
+        function renderProducts(filter = 'todos') {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'todos' ? products : products.filter(p => p.category === filter);
+
+            if(filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-500">No hay productos en esta categoría actualmente. ¡Pronto más novedades!</div>`;
+                return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "bg-reloop-cream rounded-3xl overflow-hidden border-2 border-reloop-pink/10 hover:border-reloop-pink/40 transition-all shadow-sm hover:shadow-lg flex flex-col justify-between group";
+                card.innerHTML = `
+                    <div class="relative h-56 overflow-hidden bg-reloop-pink-light">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/FBE7EE/D94E78?text=Reloop+Item'">
+                        <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-reloop-pink font-bold text-[10px] px-3 py-1 rounded-full shadow-sm">
+                            ${p.badge}
+                        </span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between">
+                        <div>
+                            <h3 class="font-extrabold text-lg text-reloop-text">${p.name}</h3>
+                            <p class="mt-2 text-reloop-pink font-extrabold text-xl">
+                                ${p.price}€ <span class="text-xs text-gray-500 font-normal">/ ${p.period}</span>
+                            </p>
+                        </div>
+                        <button onclick="rentProduct('${p.name}')" class="mt-6 w-full bg-reloop-pink text-white font-bold py-3 rounded-2xl text-xs sm:text-sm hover:bg-reloop-pink/90 shadow-md transition-all active:scale-95 flex items-center justify-center space-x-2">
+                            <span>Alquilar ahora</span>
+                            <span>♡</span>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter category buttons
+        function filterCategory(category) {
+            // Update active state of buttons if triggered by button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-reloop-pink', 'text-white');
+                btn.classList.add('bg-reloop-pink-light', 'text-reloop-pink');
+            });
+
+            event && event.target && event.target.classList.contains('filter-btn') && (() => {
+                event.target.classList.remove('bg-reloop-pink-light', 'text-reloop-pink');
+                event.target.classList.add('bg-reloop-pink', 'text-white');
+            })();
+
+            renderProducts(category);
+        }
+
+        // Custom Toast Notification replacing alert()
+        function rentProduct(productName) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerHTML = `Has solicitado alquilar <strong>${productName}</strong>. ¡Te redirigimos al proceso de reserva!`;
+
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 4000);
+        }
+
+        // Newsletter subscription handler
+        function subscribeNewsletter(e) {
+            e.preventDefault();
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerHTML = `¡Gracias por unirte a reloop! Te hemos enviado un descuento de bienvenida a tu correo.`;
+
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            e.target.reset();
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 4000);
+        }
+
+        // Initial render on load
+        window.onload = function() {
+            renderProducts('todos');
+        };
+    </script>
+</body>
+</html>
