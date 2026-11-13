@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reloop — Alquila, usa, devuelve | Un mundo más circular</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'reloop-pink': '#D94E78',
+                        'reloop-pink-light': '#FBE7EE',
+                        'reloop-green': '#456B48',
+                        'reloop-cream': '#FCFAF5',
+                        'reloop-text': '#34443B',
+                    },
+                    fontFamily: {
+                        sans: ['Quicksand', 'Nunito', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Quicksand & Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #FCFAF5;
+            color: #34443B;
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+            overflow-x: hidden;
+        }
+        /* Floating animations for mockup elements */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+        @keyframes floatFast {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(-2deg); }
+        }
+        .animate-float-1 { animation: floatSlow 4s ease-in-out infinite; }
+        .animate-float-2 { animation: floatFast 5s ease-in-out infinite; }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FCFAF5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D94E78;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-reloop-cream text-reloop-text antialiased selection:bg-reloop-pink-light selection:text-reloop-pink">
+
+    <!-- Notification Toast / Modal Box (No alert used) -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 bg-white border-2 border-reloop-pink shadow-xl rounded-2xl p-4 flex items-center space-x-3 max-w-sm">
+        <div class="bg-reloop-pink-light text-reloop-pink p-3 rounded-xl flex-shrink-0">
+            <i class="fa-solid fa-heart text-xl"></i>
+        </div>
+        <div>
+            <h4 class="font-bold text-reloop-text text-sm">¡Genial elección!</h4>
+            <p id="toast-message" class="text-xs text-gray-600">Has seleccionado un producto para alquilar.</p>
+        </div>
+    </div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 bg-reloop-cream/90 backdrop-blur-md border-b border-reloop-pink/10 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo Brand -->
+            <a href="#" class="flex items-center space-x-2 group">
+                <div class="flex flex-col items-center">
+                    <!-- Leaf icons on top -->
+                    <div class="flex space-x-1 mb-[-4px] text-reloop-green text-xs">
+                        <i class="fa-solid fa-leaf transform -rotate-12"></i>
+                        <i class="fa-solid fa-leaf transform rotate-12"></i>
+                    </div>
+                    <span class="text-3xl sm:text-4xl font-extrabold tracking-tight text-reloop-pink group-hover:scale-105 transition-transform">
+                        reloop
+                    </span>
+                    <span class="text-[10px] tracking-widest text-reloop-green font-bold uppercase mt-[-4px]">
+                        alquila · usa · devuelve
+                    </span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8 font-semibold text-sm">
+                <a href="#beneficios" class="hover:text-reloop-pink transition-colors">Beneficios</a>
+                <a href="#categorias" class="hover:text-reloop-pink transition-colors">Categorías</a>
+                <a href="#catalogo" class="hover:text-reloop-pink transition-colors">Explorar</a>
+                <a href="#comofunciona" class="hover:text-reloop-pink transition-colors">Cómo funciona</a>
+                <a href="#community" class="hover:text-reloop-pink transition-colors">Comunidad</a>
+            </nav>
+
+            <!-- Action CTA Header -->
+            <div class="flex items-center space-x-3">
+                <a href="#listing-form" class="bg-reloop-green text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-md hover:opacity-90 transition-all">Publicar producto</a>
+                <a href="#catalogo" class="bg-reloop-pink text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-md hover:bg-reloop-pink/90 hover:shadow-lg transition-all transform hover:-translate-y-0.5">Alquilar ahora ♡</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-8 pb-16 md:pt-16 md:pb-24 overflow-hidden">
+        <!-- Decorative background organic shapes -->
+        <div class="absolute top-10 left-[-5%] w-72 h-72 bg-reloop-pink-light/50 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-[-5%] w-80 h-80 bg-green-100/60 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+            <!-- Main Title Header Banner -->
+            <div class="text-center max-w-3xl mx-auto mb-10 md:mb-14">
+                <div class="inline-block bg-reloop-pink-light text-reloop-pink px-4 py-1.5 rounded-full font-bold text-xs sm:text-sm tracking-wide mb-4 shadow-sm">
+                    ✨ Únete a la revolución circular
+                </div>
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-reloop-pink tracking-tight leading-tight drop-shadow-sm">
+                    ¿Por qué comprar si puedes alquilar?
+                </h1>
+                <p class="mt-4 text-base sm:text-lg text-gray-700 max-w-xl mx-auto font-medium">
+                    Disfruta de lo que necesitas hoy sin acumular para siempre. Menos cosas en casa, más libertad en tu vida.
+                </p>
+            </div>
+
+            <!-- Central Hero Composition (Girl with floating mockups like the reference ad) -->
+            <div class="relative max-w-5xl mx-auto flex flex-col items-center justify-center min-h-[420px] sm:min-h-[520px] my-6">
+
+                <!-- Central Model Image Container -->
+                <div class="relative z-20 w-64 sm:w-80 md:w-96 h-80 sm:h-96 md:h-[440px] rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-reloop-pink-light">
+                    <!-- High quality warm portrait fallback -->
+                    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80" 
+                         alt="Mujer joven adulta disfrutando con reloop" 
+                         class="w-full h-full object-cover object-center filter saturate-105"
+                         onerror="this.src='https://placehold.co/600x800/FBE7EE/D94E78?text=Reloop+User'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-reloop-pink/30 via-transparent to-transparent"></div>
+                </div>
+
+                <!-- Floating Product Element 1: Headphones (Top Left) -->
+                <div class="absolute top-2 left-2 sm:left-12 md:left-24 z-30 animate-float-1 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-reloop-pink/20 flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-reloop-pink-light rounded-xl flex items-center justify-center text-reloop-pink text-xl">
+                        <i class="fa-solid fa-headphones"></i>
+                    </div>
+                    <div class="hidden sm:block pr-2">
+                        <p class="text-xs font-bold">Auriculares Pro</p>
+                        <p class="text-[10px] text-reloop-pink font-semibold">12€ / semana</p>
+                    </div>
+                </div>
+
+                <!-- Floating Product Element 2: Instant Camera (Middle Left) -->
+                <div class="absolute top-40 left-0 sm:left-4 md:left-8 z-30 animate-float-2 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-reloop-pink/20 flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center text-reloop-pink text-xl">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <div class="hidden sm:block pr-2">
+                        <p class="text-xs font-bold">Cámara Instantánea</p>
+                        <p class="text-[10px] text-reloop-pink font-semibold">8€ / finde</p>
+                    </div>
+                </div>
+
+                <!-- Floating Product Element 3: Mobile App Mockup (Bottom Left) -->
+                <div class="absolute bottom-[-20px] left-2 sm:left-10 z-30 animate-float-1 bg-white rounded-2xl shadow-xl p-2.5 border-2 border-reloop-pink/30 max-w-[140px] sm:max-w-[160px]">
+                    <div class="bg-reloop-pink text-white text-[10px] font-bold px-2 py-0.5 rounded-full inline-block mb-1">App reloop</div>
+                    <p class="text-[11px] font-bold leading-tight">Tu catálogo en el bolsillo</p>
+                    <div class="mt-2 flex justify-around text-reloop-pink text-xs">
+                        <i class="fa-solid fa-camera"></i>
+                        <i class="fa-solid fa-laptop"></i>
+                        <i class="fa-solid fa-shirt"></i>
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+                </div>
+
+                <!-- Floating Product Element 4: Puffer Jacket (Top Right) -->
+                <div class="absolute top-6 right-2 sm:right-12 md:right-24 z-30 animate-float-2 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-reloop-pink/20 flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-reloop-pink-light rounded-xl flex items-center justify-center text-reloop-pink text-xl">
+                        <i class="fa-solid fa-vest"></i>
+                    </div>
+                    <div class="hidden sm:block pr-2">
+                        <p class="text-xs font-bold">Chaqueta Invierno</p>
+                        <p class="text-[10px] text-reloop-pink font-semibold">15€ / mes</p>
+                    </div>
+                </div>
+
+                <!-- Floating Product Element 6: Travel Suitcase (Bottom Right) -->
+                <div class="absolute bottom-[-10px] right-2 sm:right-10 z-30 animate-float-2 bg-white rounded-2xl shadow-xl p-3 border-2 border-reloop-pink/30 flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-reloop-pink-light rounded-xl flex items-center justify-center text-reloop-pink text-lg">
+                        <i class="fa-solid fa-suitcase-rolling"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold">Maleta Cabina</p>
+                        <p class="text-[10px] text-reloop-green font-bold">Disponible</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Hero CTA Button -->
+            <div class="text-center mt-14">
+                <a href="#catalogo" class="inline-flex items-center space-x-3 bg-reloop-pink text-white font-extrabold text-lg sm:text-xl px-8 py-4 rounded-full shadow-lg hover:bg-reloop-pink/90 hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    <span>Descubre reloop</span>
+                    <span class="text-xl">♡</span>
+                </a>
+                <p class="mt-4 text-sm text-reloop-green font-semibold tracking-wide">
+                    🌿 &lt;&lt;Más vida para las cosas&gt;&gt;
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE BENEFICIOS / VALORES (Estilo iconos circulares del anuncio) -->
+    <section id="beneficios" class="py-16 bg-white border-y border-reloop-pink/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-reloop-text">
+                    Ventajas de vivir de forma más circular
+                </h2>
+                <p class="text-gray-600 mt-2 text-sm sm:text-base">
+                    Diseñado para hacerte la vida más fácil sin dejar huella innecesaria.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                <!-- Benefit 1 -->
+                <div class="bg-reloop-cream rounded-3xl p-6 text-center border-2 border-reloop-pink/10 hover:border-reloop-pink/40 transition-all group">
+                    <div class="w-20 h-20 mx-auto bg-reloop-pink-light rounded-full flex items-center justify-center text-reloop-pink text-3xl mb-5 group-hover:scale-110 transition-transform shadow-inner">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-reloop-text mb-2">Consume de forma más responsable</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        Circularidad real. Dale uso a los objetos cuando los necesitas y reduce la sobreproducción mundial.
+                    </p>
+                </div>
+
+                <!-- Benefit 2 -->
+                <div class="bg-reloop-cream rounded-3xl p-6 text-center border-2 border-reloop-pink/10 hover:border-reloop-pink/40 transition-all group">
+                    <div class="w-20 h-20 mx-auto bg-reloop-pink-light rounded-full flex items-center justify-center text-reloop-pink text-3xl mb-5 group-hover:scale-110 transition-transform shadow-inner">
+                        <i class="fa-solid fa-piggy-bank"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-reloop-text mb-2">Paga solo por el tiempo que lo necesitas</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        &lt;&lt;Paga solo por el tiempo que lo necesitas&gt;&gt;. Olvídate de inversiones caras para usos puntuales.
+                    </p>
+                </div>
+
+                <!-- Benefit 3 -->
+                <div class="bg-reloop-cream rounded-3xl p-6 text-center border-2 border-reloop-pink/10 hover:border-reloop-pink/40 transition-all group">
+                    <div class="w-20 h-20 mx-auto bg-reloop-pink-light rounded-full flex items-center justify-center text-reloop-pink text-3xl mb-5 group-hover:scale-110 transition-transform shadow-inner">
+                        <i class="fa-solid fa-house-chimney"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-reloop-text mb-2">Más espacio en tu casa y en tu cabeza</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        &lt;&lt;Más espacio en tu casa y en tu cabeza&gt;&gt;. Sin trastos acumulados ni armarios atestados ocupando sitio.
+                    </p>
+                </div>
+
+                <!-- Benefit 4 -->
+                <div class="bg-reloop-cream rounded-3xl p-6 text-center border-2 border-reloop-pink/10 hover:border-reloop-pink/40 transition-all group">
+                    <div class="w-20 h-20 mx-auto bg-reloop-pink-light rounded-full flex items-center justify-center text-reloop-green text-3xl mb-5 group-hover:scale-110 transition-transform shadow-inner">
+                        <i class="fa-solid fa-earth-americas"></i>
+                    </div>
+                    <h3 class="font-extrabold text-lg text-reloop-text mb-2">Un planeta más feliz</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        Cada alquiler evita la fabricación de nuevos objetos y disminuye la huella de carbono de nuestros hogares.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORÍAS DE ALQUILER -->
+    <section id="categorias" class="py-16 bg-reloop-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-reloop-pink font-bold text-xs uppercase tracking-widest bg-reloop-pink-light px-3 py-1 rounded-full">Explora por mundo</span>
+                    <h2 class="text-3xl font-extrabold text-reloop-text mt-3">Categorías para cada ocasión</h2>
+                </div>
+                <p class="text-gray-600 text-sm mt-2 md:mt-0 max-w-md">
+                    Todo lo que imaginas para tus escapadas, eventos, hogar o tecnología diaria sin comprarlo.
+                </p>
+            </div>
+
+            <!-- Grid de Categorías -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+
+                <!-- Cat 1: Tecnología -->
+                <div onclick="filterCategory('tecnologia')" class="category-card cursor-pointer bg-white p-6 rounded-3xl shadow-sm hover:shadow-md border-2 border-transparent hover:border-reloop-pink transition-all text-center group">
+                    <div class="w-16 h-16 mx-auto bg-reloop-pink-light rounded-2xl flex items-center justify-center text-reloop-pink text-2xl mb-4 group-hover:bg-reloop-pink group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-laptop"></i>
+                    </div>
+                    <h3 class="font-extrabold text-reloop-text text-base">Tecnología</h3>
+                    <p class="text-xs text-gray-500 mt-1">Cámaras, audio, drones</p>
+                </div>
+
+                <!-- Cat 2: Moda -->
+                <div onclick="filterCategory('moda')" class="category-card cursor-pointer bg-white p-6 rounded-3xl shadow-sm hover:shadow-md border-2 border-transparent hover:border-reloop-pink transition-all text-center group">
+                    <div class="w-16 h-16 mx-auto bg-reloop-pink-light rounded-2xl flex items-center justify-center text-reloop-pink text-2xl mb-4 group-hover:bg-reloop-pink group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-shirt"></i>
+                    </div>
+                    <h3 class="font-extrabold text-reloop-text text-base">Moda & Eventos</h3>
+                    <p class="text-xs text-gray-500 mt-1">Abrigos, bolsos, vestidos</p>
+                </div>
+
+                <!-- Cat 3: Viajes -->
+                <div onclick="filterCategory('viajes')" class="category-card cursor-pointer bg-white p-6 rounded-3xl shadow-sm hover:shadow-md border-2 border-transparent hover:border-reloop-pink transition-all text-center group">
+                    <div class="w-16 h-16 mx-auto bg-reloop-pink-light rounded-2xl flex items-center justify-center text-reloop-pink text-2xl mb-4 group-hover:bg-reloop-pink group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-suitcase-rolling"></i>
+                    </div>
+                    <h3 class="font-extrabold text-reloop-text text-base">Viajes</h3>
+                    <p class="text-xs text-gray-500 mt-1">Maletas, mochilas, camping</p>
+                </div>
+
+                <!-- Cat 4: Hogar -->
+                <div onclick="filterCategory('hogar')" class="category-card cursor-pointer bg-white p-6 rounded-3xl shadow-sm hover:shadow-md border-2 border-transparent hover:border-reloop-pink transition-all text-center group">
+                    <div class="w-16 h-16 mx-auto bg-reloop-pink-light rounded-2xl flex items-center justify-center text-reloop-pink text-2xl mb-4 group-hover:bg-reloop-pink group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+                    <h3 class="font-extrabold text-reloop-text text-base">Hogar y más</h3>
+                    <p class="text-xs text-gray-500 mt-1">Herramientas, decoración</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN INTERACTIVA / EXPLORADOR Y SIMULADOR DE PRODUCTOS -->
+    <section id="catalogo" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-reloop-pink font-bold text-xs uppercase tracking-widest bg-reloop-pink-light px-3 py-1 rounded-full">Disponibles hoy</span>
+                <h2 class="text-3xl font-extrabold text-reloop-text mt-3">Explora los favoritos de reloop</h2>
+                <p class="text-gray-600 mt-2 text-sm">
+                    Selecciona lo que necesites, elige cuántos días quieres tenerlo y disfrútalo al instante.
+                </p>
+            </div>
+
+            <!-- Filtros interactivos -->
+            <div class="flex flex-wrap justify-center gap-2 mb-10">
+                <button onclick="filterCategory('todos')" class="filter-btn active bg-reloop-pink text-white px-5 py-2 rounded-full font-bold text-xs shadow-sm transition-all">Todos</button>
+                <button onclick="filterCategory('tecnologia')" class="filter-btn bg-reloop-pink-light text-reloop-pink hover:bg-reloop-pink hover:text-white px-5 py-2 rounded-full font-bold text-xs transition-all">Tecnología</button>
+                <button onclick="filterCategory('moda')" class="filter-btn bg-reloop-pink-light text-reloop-pink hover:bg-reloop-pink hover:text-white px-5 py-2 rounded-full font-bold text-xs transition-all">Moda</button>
+                <button onclick="filterCategory('viajes')" class="filter-btn bg-reloop-pink-light text-reloop-pink hover:bg-reloop-pink hover:text-white px-5 py-2 rounded-full font-bold text-xs transition-all">Viajes</button>
+                <button onclick="filterCategory('hogar')" class="filter-btn bg-reloop-pink-light text-reloop-pink hover:bg-reloop-pink hover:text-white px-5 py-2 rounded-full font-bold text-xs transition-all">Hogar</button>
+            </div>
+
+            <!-- Grid de Productos (Dinámico generado por JS) -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Se llena mediante JavaScript con plantillas de productos -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CÓMO FUNCIONA -->
+    <section id="comofunciona" class="py-16 bg-reloop-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-reloop-green font-bold text-xs uppercase tracking-widest bg-emerald-100 px-3 py-1 rounded-full">Súper fácil</span>
+                <h2 class="text-3xl font-extrabold text-reloop-text mt-3">Alquila · Usa · Devuelve</h2>
+                <p class="text-gray-600 mt-2 text-sm">
+                    Tres simples pasos para disfrutar de lo que quieras sin complicaciones.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Paso 1 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border-2 border-reloop-pink/10 text-center relative">
+                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-reloop-pink text-white rounded-full font-extrabold flex items-center justify-center shadow-md">
+                        1
+                    </div>
+                    <div class="w-16 h-16 mx-auto bg-reloop-pink-light rounded-2xl flex items-center justify-center text-reloop-pink text-2xl mb-6 mt-2">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <h3 class="font-extrabold text-xl text-reloop-text mb-2">Alquila</h3>
+                    <p class="text-sm text-gray-600">
+                        Busca en nuestra app o web el objeto que te hace falta para tu escapada, proyecto o temporada y elige el plazo exacto.
+                    </p>
+                </div>
+
+                <!-- Paso 2 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border-2 border-reloop-pink/10 text-center relative">
+                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-reloop-pink text-white rounded-full font-extrabold flex items-center justify-center shadow-md">
+                        2
+                    </div>
+                    <div class="w-16 h-16 mx-auto bg-reloop-pink-light rounded-2xl flex items-center justify-center text-reloop-pink text-2xl mb-6 mt-2">
+                        <i class="fa-solid fa-face-smile"></i>
+                    </div>
+                    <h3 class="font-extrabold text-xl text-reloop-text mb-2">Usa</h3>
+                    <p class="text-sm text-gray-600">
+                        Recíbelo cómodamente en tu casa. Disfrútalo al 100% sin preocuparte por mantenimientos ni almacenamiento posterior.
+                    </p>
+                </div>
+
+                <!-- Paso 3 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border-2 border-reloop-pink/10 text-center relative">
+                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-reloop-pink text-white rounded-full font-extrabold flex items-center justify-center shadow-md">
+                        3
+                    </div>
+                    <div class="w-16 h-16 mx-auto bg-reloop-pink-light rounded-2xl flex items-center justify-center text-reloop-pink text-2xl mb-6 mt-2">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <h3 class="font-extrabold text-xl text-reloop-text mb-2">Devuelve</h3>
+                    <p class="text-sm text-gray-600">
+                        Cuando termines, lo devuelves fácilmente con nuestra etiqueta prepagada. Nosotros nos encargamos de darle nueva vida.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-reloop-text text-white pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+
+                <!-- Col 1: Brand -->
+                <div class="md:col-span-1">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <span class="text-3xl font-extrabold tracking-tight text-reloop-pink">
+                            reloop
+                        </span>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        Alquila, usa y devuelve. Una manera más inteligente y responsable de consumir sin acumular.
+                    </p>
+                    <div class="mt-4 flex space-x-3 text-reloop-pink">
+                        <a href="#" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-reloop-pink hover:text-white transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-reloop-pink hover:text-white transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-reloop-pink hover:text-white transition-colors"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Categorías -->
+                <div>
+                    <h4 class="font-bold text-sm mb-4 text-reloop-pink-light uppercase tracking-wider">Categorías</h4>
+                    <ul class="space-y-2 text-xs text-gray-300">
+                        <li><a href="#catalogo" class="hover:text-reloop-pink transition-colors">Tecnología & Audio</a></li>
+                        <li><a href="#catalogo" class="hover:text-reloop-pink transition-colors">Moda & Eventos</a></li>
+                        <li><a href="#catalogo" class="hover:text-reloop-pink transition-colors">Viajes & Equipaje</a></li>
+                        <li><a href="#catalogo" class="hover:text-reloop-pink transition-colors">Hogar & Tiempo libre</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Empresa -->
+                <div>
+                    <h4 class="font-bold text-sm mb-4 text-reloop-pink-light uppercase tracking-wider">reloop</h4>
+                    <ul class="space-y-2 text-xs text-gray-300">
+                        <li><a href="#beneficios" class="hover:text-reloop-pink transition-colors">Propósito y Valores</a></li>
+                        <li><a href="#comofunciona" class="hover:text-reloop-pink transition-colors">Cómo funciona</a>
+                <a href="#community" class="hover:text-reloop-pink transition-colors">Comunidad</a></li>
+                        <li><a href="#" class="hover:text-reloop-pink transition-colors">Sostenibilidad</a></li>
+                        <li><a href="#" class="hover:text-reloop-pink transition-colors">Trabaja con nosotros</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Newsletter -->
+                <div>
+                    <h4 class="font-bold text-sm mb-4 text-reloop-pink-light uppercase tracking-wider">Únete al cambio</h4>
+                    <p class="text-xs text-gray-300 mb-3">Recibe novedades y tips circulares sin spam.</p>
+                    <form onsubmit="subscribeNewsletter(event)" class="flex flex-col space-y-2">
+                        <input type="email" placeholder="tu@correo.com" required class="bg-white/10 border border-white/20 px-4 py-2.5 rounded-xl text-xs text-white placeholder-gray-400 focus:outline-none focus:border-reloop-pink">
+                        <button type="submit" class="bg-reloop-pink text-white font-bold py-2.5 rounded-xl text-xs hover:bg-reloop-pink/90 transition-colors">
+                            Suscribirme ♡
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright & Claim -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400">
+                <p>&copy; 2026 reloop. Todos los derechos reservados.</p>
+                <p class="mt-4 sm:mt-0 font-bold text-reloop-pink-light">
+                    🌱 Un mundo más circular también es más tuyo
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- RELOOP INTERACTIVE MARKETPLACE -->
+    <section id="community" class="py-16 bg-reloop-pink-light/40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-3xl p-7 shadow-sm">
+          <span class="text-xs uppercase tracking-widest font-extrabold text-reloop-pink">Comunidad reloop</span>
+          <h2 class="text-2xl font-extrabold mt-2">Lo que cuenta la gente</h2>
+          <div id="reviews" class="space-y-4 mt-5">
+            <article class="border-b pb-4"><div class="text-amber-500">★★★★★</div><p class="text-sm mt-1">“Alquilé una cámara para un viaje y fue facilísimo. Estaba impecable.”</p><p class="text-xs text-gray-500 mt-2">— Martina G. · Reserva verificada (demo)</p></article>
+            <article class="border-b pb-4"><div class="text-amber-500">★★★★★</div><p class="text-sm mt-1">“Me encanta poder dar una segunda vida a las cosas que ya no uso.”</p><p class="text-xs text-gray-500 mt-2">— Paula R. · Anfitriona (demo)</p></article>
+          </div>
+          <form id="review-form" class="mt-5 space-y-3" onsubmit="addReview(event)">
+            <label class="text-sm font-bold block">Deja tu valoración</label>
+            <select id="review-stars" class="border rounded-xl p-3 w-full" aria-label="Estrellas"><option value="5">★★★★★ · 5 estrellas</option><option value="4">★★★★ · 4 estrellas</option><option value="3">★★★ · 3 estrellas</option><option value="2">★★ · 2 estrellas</option><option value="1">★ · 1 estrella</option></select>
+            <input id="review-name" required maxlength="40" placeholder="Tu nombre" class="border rounded-xl p-3 w-full">
+            <textarea id="review-text" required maxlength="300" placeholder="¿Cómo ha sido tu experiencia?" class="border rounded-xl p-3 w-full"></textarea>
+            <button class="bg-reloop-green text-white rounded-xl px-5 py-3 font-bold">Publicar opinión</button>
+          </form>
+        </div>
+        <div class="bg-white rounded-3xl p-7 shadow-sm">
+          <span class="text-xs uppercase tracking-widest font-extrabold text-reloop-green">¿Tienes cosas que compartir?</span>
+          <h2 class="text-2xl font-extrabold mt-2">Publica tu producto</h2>
+          <p class="text-sm text-gray-600 mt-2">Crea un anuncio de prueba con fotos, precio y disponibilidad.</p>
+          <form id="listing-form" class="space-y-3 mt-5" onsubmit="addListing(event)">
+            <input id="listing-title" required maxlength="70" placeholder="Nombre del producto" class="border rounded-xl p-3 w-full">
+            <select id="listing-category" class="border rounded-xl p-3 w-full"><option value="tecnologia">Tecnología</option><option value="moda">Moda</option><option value="viajes">Viajes</option><option value="hogar">Hogar</option></select>
+            <div class="grid grid-cols-2 gap-3"><input id="listing-price" type="number" min="1" max="10000" required placeholder="€/día" class="border rounded-xl p-3 w-full"><input id="listing-city" maxlength="50" placeholder="Ciudad" class="border rounded-xl p-3 w-full"></div>
+            <label class="block text-sm font-bold">Fotos del producto (puedes usar la cámara del móvil)</label>
+            <input id="listing-photo" type="file" accept="image/*" capture="environment" class="border rounded-xl p-3 w-full text-sm">
+            <button class="bg-reloop-pink text-white rounded-xl px-5 py-3 font-bold w-full">Publicar anuncio de prueba</button>
+          </form>
+          <p class="text-xs text-gray-500 mt-3">En esta versión, los anuncios y opiniones se guardan solo en este navegador.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-14 bg-white">
+      <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-start">
+        <div><h2 class="text-2xl font-extrabold">¿Necesitas ayuda?</h2><p class="text-sm text-gray-600 mt-2">Prueba el chat de demostración de reloop.</p>
+          <div class="border rounded-2xl p-4 mt-4"><div id="chat-log" class="h-44 overflow-y-auto space-y-2 text-sm"><p class="bg-reloop-pink-light rounded-xl p-3">¡Hola! Soy el asistente de reloop. ¿Qué necesitas saber?</p></div><form onsubmit="sendChat(event)" class="flex gap-2 mt-3"><input id="chat-input" required placeholder="Escribe tu mensaje…" class="min-w-0 flex-1 border rounded-xl p-3"><button class="bg-reloop-pink text-white rounded-xl px-4 font-bold">Enviar</button></form></div>
+        </div>
+        <div class="bg-reloop-cream rounded-2xl p-6"><h3 class="font-extrabold text-xl">Tu cesta</h3><div id="cart-items" class="text-sm text-gray-600 mt-3">Todavía no has añadido productos.</div><div class="flex justify-between font-extrabold mt-4"><span>Total estimado</span><span id="cart-total">0,00 €</span></div><button onclick="openCheckout()" class="mt-4 w-full bg-reloop-green text-white rounded-xl p-3 font-bold">Continuar a la reserva</button><p class="text-xs text-gray-500 mt-2">Checkout simulado: no se realiza ningún cobro.</p></div>
+      </div>
+    </section>
+
+    <!-- Booking modal -->
+    <div id="booking-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 p-4" role="dialog" aria-modal="true" aria-labelledby="booking-title">
+      <div class="bg-white rounded-3xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center"><h2 id="booking-title" class="text-xl font-extrabold">Reserva tu producto</h2><button onclick="closeModal('booking-modal')" aria-label="Cerrar" class="text-2xl">×</button></div>
+        <p id="booking-product" class="text-reloop-pink font-bold mt-2"></p>
+        <div class="grid grid-cols-2 gap-3 mt-4"><label class="text-sm">Fecha de inicio<input id="booking-date" type="date" class="block border rounded-xl p-3 w-full mt-1"></label><label class="text-sm">Días<input id="booking-days" type="number" min="1" max="90" value="3" class="block border rounded-xl p-3 w-full mt-1" oninput="updateBookingTotal()"></label></div>
+        <label class="block text-sm mt-3">Entrega<select id="booking-delivery" class="border rounded-xl p-3 w-full mt-1"><option>Recogida en mano</option><option>Envío a domicilio (estimación demo)</option></select></label>
+        <div class="bg-reloop-pink-light rounded-xl p-4 mt-4 flex justify-between font-extrabold"><span>Total estimado</span><span id="booking-total">—</span></div>
+        <button onclick="confirmBooking()" class="bg-reloop-pink text-white rounded-xl p-3 w-full font-bold mt-4">Confirmar reserva de prueba</button>
+        <p class="text-xs text-gray-500 mt-2">No se cobra ni se confirma una reserva real en esta demo.</p>
+      </div>
+    </div>
+    <div id="checkout-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 p-4" role="dialog" aria-modal="true"><div class="bg-white rounded-3xl p-6 w-full max-w-md"><div class="flex justify-between"><h2 class="font-extrabold text-xl">Finalizar reserva</h2><button onclick="closeModal('checkout-modal')" class="text-2xl">×</button></div><p class="text-sm text-gray-600 mt-3">Esta es una pantalla de demostración. Para aceptar pagos reales hace falta integrar una pasarela segura (por ejemplo, Stripe), autenticación y un servidor.</p><label class="block text-sm mt-4">Correo de contacto<input type="email" id="checkout-email" placeholder="tu@email.com" class="border rounded-xl p-3 w-full mt-1"></label><button onclick="demoCheckout()" class="bg-reloop-green text-white rounded-xl p-3 w-full font-bold mt-4">Simular pedido</button></div></div>
+
+    <script>
+      const categories=['tecnologia','moda','viajes','hogar'];
+      const catalog=[
+        ['Auriculares inalámbricos','tecnologia',6,'fa-headphones','photo-1505740420928-5e560c06d30e'],['Cámara instantánea','tecnologia',9,'fa-camera','photo-1526170375885-4d8ecf77b99f'],['Proyector portátil','tecnologia',12,'fa-video','photo-1517604931442-7e0c8ed2963c'],['Altavoz bluetooth','tecnologia',5,'fa-volume-high','photo-1608043152269-423dbba4e7e1'],['Tablet','tecnologia',10,'fa-tablet-screen-button','photo-1544244015-0df4b3ffc6b0'],['Consola de videojuegos','tecnologia',14,'fa-gamepad','photo-1486401899868-0e435ed85128'],['Micrófono','tecnologia',7,'fa-microphone','photo-1590602847861-f357a9332bbc'],['Trípode','tecnologia',4,'fa-camera-retro','photo- tripod'],
+        ['Vestido de fiesta','moda',8,'fa-shirt','photo-1566174053879-31528523f8ae'],['Chaqueta de invierno','moda',7,'fa-person','photo-1543076447-215ad9ba6923'],['Bolso para evento','moda',5,'fa-bag-shopping','photo-1584917865442-de89df76afd3'],['Disfraz','moda',6,'fa-masks-theater','photo- costumes'],['Abrigo elegante','moda',9,'fa-shirt','photo-1539533018447-63fcce2678e3'],['Complementos de fiesta','moda',3,'fa-gem','photo- accessories'],
+        ['Maleta de cabina','viajes',7,'fa-suitcase-rolling','photo-1553062407-98eeb64c6a62'],['Mochila de viaje','viajes',4,'fa-backpack','photo-1622560480654-d96214fdc887'],['Tienda de campaña','viajes',12,'fa-campground','photo- tents'],['Saco de dormir','viajes',5,'fa-bed','photo- sleepingbag'],['Bastones de trekking','viajes',4,'fa-person-hiking','photo- trekking'],['Equipo de picnic','viajes',6,'fa-basket-shopping','photo- picnic'],
+        ['Taladro eléctrico','hogar',8,'fa-screwdriver-wrench','photo-1504148455328-c376907d081c'],['Máquina de coser','hogar',9,'fa-gears','photo- sewing'],['Proyector de cine','hogar',11,'fa-film','photo-1517604931442-7e0c8ed2963c'],['Alfombra decorativa','hogar',4,'fa-rug','photo- rugs'],['Silla plegable','hogar',3,'fa-chair','photo- chairs'],['Kit de herramientas','hogar',6,'fa-toolbox','photo- tools']
+      ];
+      const extras=['Edición compacta','Premium','para eventos','de viaje','profesional','ligero','clásico','multifunción','inalámbrico','de diseño','portátil','especial'];
+      const products=[];
+      catalog.forEach((item,i)=>{for(let j=0;j<4;j++){let [name,category,price,icon,photo]=item;let suffix=j===0?'':` ${extras[(i*3+j)%extras.length]}`;let image=photo.startsWith('photo-')?`https://images.unsplash.com/${photo}?auto=format&fit=crop&w=700&q=80`:'https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&w=700&q=80';products.push({id:products.length+1,name:name+suffix,category,price:price+(j%3),image,icon,rating:(4.4+((i+j)%6)/10).toFixed(1),owner:['Lucía','Marta','Claudia','Andrea','Sofía'][(i+j)%5],badge:j===0?'Muy solicitado':(j===1?'Buen estado':'Disponible')})}});
+      let activeProduct=null, cart=[];
+      const euro=n=>`${n.toFixed(2).replace('.',',')} €`;
+      function renderProducts(filter='todos'){
+        const grid=document.getElementById('product-grid');grid.innerHTML='';
+        const list=filter==='todos'?products:products.filter(p=>p.category===filter);
+        list.forEach(p=>{const card=document.createElement('article');card.className='bg-reloop-cream rounded-3xl overflow-hidden border-2 border-reloop-pink/10 hover:border-reloop-pink/40 transition-all shadow-sm flex flex-col';card.innerHTML=`<div class="relative h-48 bg-reloop-pink-light"><img src="${p.image}" alt="${p.name}" loading="lazy" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/700x450/FBE7EE/D94E78?text=Reloop'"><span class="absolute top-3 left-3 bg-white/90 text-reloop-pink font-bold text-xs px-3 py-1 rounded-full">${p.badge}</span></div><div class="p-5 flex flex-col flex-grow"><div class="flex justify-between gap-2"><h3 class="font-extrabold text-lg">${p.name}</h3><button onclick="toggleFavourite(${p.id},this)" aria-label="Guardar favorito" class="text-2xl text-reloop-pink">♡</button></div><p class="text-xs text-gray-500 mt-1">${p.category} · De ${p.owner}</p><p class="text-amber-500 text-sm mt-2">★★★★★ <span class="text-gray-500">${p.rating} · opiniones demo</span></p><p class="mt-3 text-reloop-pink font-extrabold text-xl">${p.price}€ <span class="text-xs text-gray-500 font-normal">/ día</span></p><button onclick="rentProduct(${p.id})" class="mt-auto pt-4"><span class="block w-full bg-reloop-pink text-white font-bold py-3 rounded-2xl">Ver fechas y alquilar</span></button></div>`;grid.appendChild(card)});
+        document.getElementById('catalog-count')?.remove();const count=document.createElement('p');count.id='catalog-count';count.className='text-center text-sm text-gray-500 mb-5';count.textContent=`${list.length} productos disponibles en este catálogo de demostración`;grid.before(count);
+      }
+      function filterCategory(category){document.querySelectorAll('.filter-btn').forEach(b=>{b.classList.remove('bg-reloop-pink','text-white');b.classList.add('bg-reloop-pink-light','text-reloop-pink')});if(window.event?.target?.classList.contains('filter-btn')){window.event.target.classList.add('bg-reloop-pink','text-white');window.event.target.classList.remove('bg-reloop-pink-light','text-reloop-pink')}renderProducts(category)}
+      function toggleFavourite(id,btn){btn.textContent=btn.textContent==='♡'?'♥':'♡';toastMessage(btn.textContent==='♥'?'Guardado en tus favoritos':'Eliminado de favoritos')}
+      function rentProduct(id){activeProduct=products.find(p=>p.id===id);document.getElementById('booking-product').textContent=`${activeProduct.name} · ${activeProduct.price} €/día`;const date=new Date();date.setDate(date.getDate()+1);document.getElementById('booking-date').min=date.toISOString().slice(0,10);document.getElementById('booking-date').value=date.toISOString().slice(0,10);document.getElementById('booking-modal').classList.remove('hidden');document.getElementById('booking-modal').classList.add('flex');updateBookingTotal()}
+      function updateBookingTotal(){if(!activeProduct)return;let days=Math.max(1,Math.min(90,Number(document.getElementById('booking-days').value)||1));document.getElementById('booking-total').textContent=euro(days*activeProduct.price)}
+      function confirmBooking(){let date=document.getElementById('booking-date').value;if(!date){toastMessage('Elige una fecha para continuar');return}let days=Number(document.getElementById('booking-days').value)||1;cart.push({name:activeProduct.name,days,price:activeProduct.price,date});updateCart();closeModal('booking-modal');toastMessage('Reserva añadida a tu cesta (demo)')}
+      function updateCart(){let el=document.getElementById('cart-items');el.innerHTML=cart.length?cart.map((x,i)=>`<div class="flex justify-between gap-3 border-b py-2"><span>${x.name} · ${x.days} días</span><button onclick="removeCart(${i})" class="text-reloop-pink">Quitar</button><strong>${euro(x.days*x.price)}</strong></div>`).join(''):'Todavía no has añadido productos.';document.getElementById('cart-total').textContent=euro(cart.reduce((s,x)=>s+x.days*x.price,0))}
+      function removeCart(i){cart.splice(i,1);updateCart()}
+      function openCheckout(){if(!cart.length){toastMessage('Añade primero un producto a tu cesta');return}document.getElementById('checkout-modal').classList.remove('hidden');document.getElementById('checkout-modal').classList.add('flex')}
+      function demoCheckout(){let email=document.getElementById('checkout-email').value;if(!email){toastMessage('Introduce un correo de contacto');return}closeModal('checkout-modal');cart=[];updateCart();toastMessage('Pedido de prueba creado. No se ha realizado ningún cobro.')}
+      function closeModal(id){document.getElementById(id).classList.add('hidden');document.getElementById(id).classList.remove('flex')}
+      function toastMessage(msg){const t=document.getElementById('toast');document.getElementById('toast-message').textContent=msg;t.classList.remove('translate-y-32','opacity-0');t.classList.add('translate-y-0','opacity-100');setTimeout(()=>{t.classList.add('translate-y-32','opacity-0');t.classList.remove('translate-y-0','opacity-100')},3200)}
+      function addReview(e){e.preventDefault();let stars='★'.repeat(Number(document.getElementById('review-stars').value));let name=document.getElementById('review-name').value.replace(/[<>]/g,'');let body=document.getElementById('review-text').value.replace(/[<>]/g,'');let article=document.createElement('article');article.className='border-b pb-4';article.innerHTML=`<div class="text-amber-500">${stars}</div><p class="text-sm mt-1"></p><p class="text-xs text-gray-500 mt-2"></p>`;article.querySelector('p:nth-child(2)').textContent=body;article.querySelector('p:nth-child(3)').textContent=`— ${name} · Opinión local (demo)`;document.getElementById('reviews').prepend(article);e.target.reset();toastMessage('¡Gracias por compartir tu opinión!')}
+      function addListing(e){e.preventDefault();let title=document.getElementById('listing-title').value.replace(/[<>]/g,'');let category=document.getElementById('listing-category').value;let price=Number(document.getElementById('listing-price').value);let file=document.getElementById('listing-photo').files[0];let image=file?URL.createObjectURL(file):'https://placehold.co/700x450/FBE7EE/D94E78?text=Tu+producto';products.unshift({id:Date.now(),name:title,category,price,image,owner:'Tú',badge:'Tu anuncio',rating:'—',icon:'fa-box'});renderProducts('todos');e.target.reset();document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});toastMessage('Anuncio añadido a esta sesión de prueba')}
+      function sendChat(e){e.preventDefault();let input=document.getElementById('chat-input'),msg=input.value.trim();if(!msg)return;let log=document.getElementById('chat-log');let mine=document.createElement('p');mine.className='bg-gray-100 rounded-xl p-3 ml-8';mine.textContent=msg;log.append(mine);let answer=document.createElement('p');answer.className='bg-reloop-pink-light rounded-xl p-3 mr-8';answer.textContent='¡Gracias por escribir! Este chat es una demo. En la versión real conectaremos mensajes privados entre usuarios y soporte.';log.append(answer);input.value='';log.scrollTop=log.scrollHeight}
+      function subscribeNewsletter(e){e.preventDefault();toastMessage('¡Gracias por apuntarte a las novedades de reloop!');e.target.reset()}
+      window.addEventListener('DOMContentLoaded',()=>renderProducts('todos'));
+    </script>
+</body>
+</html>
